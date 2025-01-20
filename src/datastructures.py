@@ -13,23 +13,54 @@ class FamilyStructure:
         self.last_name = last_name
 
         # example list of members
-        self._members = []
+        self._members = [
+            {
+                "id": 1,
+                "first_name":"John",
+                "last_name": self.last_name,
+                "age": 33,
+                "lucky_numbers":[7,13,22]
+            },
+                        {
+                "id": 2,
+                "first_name":"Jane",
+                "last_name": self.last_name,
+                "age": 35,
+                "lucky_numbers":[10,14,3]
+            },
+                        {
+                "id": 3,
+                "first_name":"Jimmy",
+                "last_name": self.last_name,
+                "age": 5,
+                "lucky_numbers":[1]
+            }
+        ]
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
         return randint(0, 99999999)
 
     def add_member(self, member):
-        # fill this method and update the return
-        pass
+        new_member = {
+            **member,
+            "id": self._generateId(),
+            "last_name": self.last_name
+        }
+        self._members.append(new_member)
+        return new_member
 
     def delete_member(self, id):
-        # fill this method and update the return
-        pass
+        # member_index = self._members.index(next(filter(lambda member: member.get('id') == id, self._members)))
+        member_index = next((i for i, item in enumerate(self._members) if item["id"] == id))
+        self._members.pop(member_index)
+        return True 
 
     def get_member(self, id):
-        # fill this method and update the return
-        pass
+        # member = list(filter(lambda member:member["id"] == id, self._members))[0] or None
+        # member = next((member for member in self._members if member["id"] == id), None)
+        member = next(filter(lambda member:member["id"] == id, self._members), None)
+        return member
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
